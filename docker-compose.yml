@@ -1,0 +1,36 @@
+services:
+    app:
+        build: .
+        container_name: stats_app
+        working_dir: /var/www/html
+        volumes:
+            - ./:/var/www/html
+        depends_on:
+            - mysql
+
+    nginx:
+        image: nginx:1.25-alpine
+        container_name: stats_nginx
+        ports:
+            - "8080:80"
+        volumes:
+            - ./:/var/www/html
+            - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+        depends_on:
+            - app
+
+    mysql:
+        image: mysql:8.0
+        container_name: stats_mysql
+        environment:
+            MYSQL_DATABASE: stats
+            MYSQL_USER: stats
+            MYSQL_PASSWORD: secret
+            MYSQL_ROOT_PASSWORD: root
+        ports:
+            - "3307:3306"
+        volumes:
+            - mysql_data:/var/lib/mysql
+
+volumes:
+    mysql_data:
