@@ -72,3 +72,9 @@ docker compose exec app php -d memory_limit=512M artisan stats:sync all --from=2
   строк, расчёт `row_hash`, батч-upsert.
 - `app/Console/Commands/SyncStatsCommand.php` - artisan-команда `stats:sync`.
 - `config/stats.php` - конфигурация API и описание сущностей (эндпоинты, колонки).
+
+## Развёрнутая БД
+
+БД с выгруженными данными развёрнута на бесплатном хостинге Aiven (MySQL 8).
+Доступы к ней переданы отдельно.
+Подключение требует SSL (`ssl-mode=REQUIRED`).
